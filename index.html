@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ingfo Cafe</title>
+  <title>Cafe Finder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     * {
@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
     }
-  
+
     :root {
       --primary: #8b5a3c;
       --primary-light: #a0673d;
@@ -23,17 +23,17 @@
       --text-secondary: #6b6361;
       --border: #e5ddd3;
       --success: #8b5a3c;
-      --danger: #d76a6f;
+      --success-light: #e8c9a0;
       --radius: 12px;
     }
-  
+
     body {
       background: var(--background);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       line-height: 1.6;
     }
-  
+
     .app {
       width: 100%;
       min-height: 100vh;
@@ -41,30 +41,30 @@
       flex-direction: column;
       background: var(--background);
     }
-  
+
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
-  
+
     .header-content {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-  
+
     header h1 {
       font-size: 1.8rem;
       color: var(--primary);
       font-weight: 700;
       letter-spacing: -0.5px;
     }
-  
+
     header span {
       font-size: 0.85rem;
       color: var(--text-secondary);
@@ -72,134 +72,127 @@
       padding: 4px 10px;
       border-radius: 999px;
     }
-  
-    /* Tabs row centered */
+
     .tabs {
       display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 48px;
+      justify-content: center;       /* center tabs */
+      gap: 16px;                     /* space between buttons */
       border-bottom: 1px solid var(--border);
       background: var(--surface);
       padding: 0 20px;
     }
-  
+
     .tab {
-      flex: 0 0 auto;
+      flex: 0 0 auto;                /* don't stretch full width */
       padding: 14px 24px;
       border: none;
       background: transparent;
       color: var(--text-secondary);
       font-size: 0.95rem;
       cursor: pointer;
-      transition: all 0.25s;
+      transition: all 0.3s;
       font-weight: 500;
       border-bottom: 2px solid transparent;
     }
-  
+
     .tab:hover {
       color: var(--primary);
     }
-  
+
     .tab.active {
       color: var(--primary);
       border-bottom-color: var(--primary);
     }
-  
+
     .content {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-  
+
     .tab-panel {
       display: none;
       padding: 20px;
       flex: 1;
     }
-  
+
     .tab-panel.active {
       display: block;
     }
-  
+
     .layout-two-column {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 20px;
       height: 100%;
     }
-  
+
     @media (max-width: 1024px) {
       .layout-two-column {
         grid-template-columns: 1fr;
         gap: 16px;
       }
     }
-  
+
     #map {
       width: 100%;
       height: 400px;
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-  
+
     .map-container {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-  
+
     .search-bar {
       display: flex;
       gap: 8px;
     }
-  
+
     .search-input {
       flex: 1;
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: var(--surface-alt);
+      background: var(--surface);
       color: var(--text);
       font-size: 0.9rem;
       transition: all 0.3s;
     }
-  
-    .search-input::placeholder {
-      color: #b3a290;
-    }
-  
+
     .search-input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.2);
+      box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.1);
     }
-  
+
     .search-btn {
       padding: 10px 18px;
       border: none;
       border-radius: 999px;
       background: var(--primary);
-      color: #fff;
+      color: white;
       font-weight: 600;
       cursor: pointer;
       font-size: 0.9rem;
       transition: all 0.3s;
       white-space: nowrap;
     }
-  
+
     .search-btn:hover {
       background: var(--primary-light);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(139, 90, 60, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 90, 60, 0.2);
     }
-  
+
     .search-btn:active {
       transform: translateY(0);
-      box-shadow: none;
     }
-  
+
     .info-text {
       font-size: 0.8rem;
       color: var(--text-secondary);
@@ -207,9 +200,8 @@
       padding: 12px;
       background: var(--surface-alt);
       border-radius: var(--radius);
-      border: 1px solid var(--border);
     }
-  
+
     .cafe-list-container {
       display: flex;
       flex-direction: column;
@@ -217,7 +209,7 @@
       height: 100%;
       overflow-y: auto;
     }
-  
+
     .filter-row {
       display: flex;
       gap: 12px;
@@ -228,7 +220,7 @@
       border-radius: var(--radius);
       border: 1px solid var(--border);
     }
-  
+
     .filter-row label {
       display: flex;
       align-items: center;
@@ -237,23 +229,23 @@
       color: var(--text-secondary);
       font-weight: 500;
     }
-  
+
     .filter-select {
       padding: 6px 10px;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: var(--surface-alt);
+      background: var(--surface);
       color: var(--text);
       font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.3s;
     }
-  
+
     .filter-select:focus {
       outline: none;
       border-color: var(--primary);
     }
-  
+
     .cafe-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -265,42 +257,42 @@
       transition: all 0.3s;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
-  
+
     .cafe-card:hover {
       border-color: var(--primary);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 16px rgba(139, 90, 60, 0.12);
     }
-  
+
     .cafe-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
     }
-  
+
     .cafe-info {
       flex: 1;
       min-width: 0;
     }
-  
+
     .cafe-name {
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--primary);
+      color: var(--text);
     }
-  
+
     .cafe-address {
       font-size: 0.8rem;
       color: var(--text-secondary);
       margin-top: 4px;
     }
-  
+
     .cafe-distance {
       font-size: 0.8rem;
       color: var(--text-secondary);
       margin-top: 4px;
     }
-  
+
     .status {
       font-size: 0.7rem;
       padding: 4px 10px;
@@ -309,31 +301,23 @@
       white-space: nowrap;
       display: inline-block;
     }
-  
+
     .status-visited {
-      background: rgba(139, 90, 60, 0.1);
-      color: var(--success);
-      border: 1px solid rgba(139, 90, 60, 0.4);
+      background: var(--success-light);
+      color: var(--primary);
     }
-  
+
     .status-unvisited {
-      background: rgba(215, 106, 111, 0.06);
-      color: var(--danger);
-      border: 1px solid rgba(215, 106, 111, 0.4);
+      background: #fce4ec;
+      color: #c2185b;
     }
-  
-    .status-potential {
-      background: rgba(212, 165, 116, 0.08);
-      color: var(--accent);
-      border: 1px solid rgba(212, 165, 116, 0.5);
-    }
-  
+
     .cafe-actions {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
-  
+
     .small-btn {
       border: 1px solid var(--border);
       background: var(--surface-alt);
@@ -348,24 +332,24 @@
       transition: all 0.3s;
       font-weight: 500;
     }
-  
+
     .small-btn:hover {
       border-color: var(--primary);
-      background: #f0e5d6;
+      background: var(--surface);
       color: var(--primary);
     }
-  
+
     .small-btn--accent {
       border-color: var(--primary);
       background: var(--primary);
-      color: #fff;
+      color: white;
     }
-  
+
     .small-btn--accent:hover {
       background: var(--primary-light);
       border-color: var(--primary-light);
     }
-  
+
     .gmaps-link {
       font-size: 0.75rem;
       color: var(--primary);
@@ -374,44 +358,44 @@
       display: inline-block;
       transition: all 0.3s;
     }
-  
+
     .gmaps-link:hover {
       text-decoration: underline;
       color: var(--primary-light);
     }
-  
+
     .rating-row {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-top: 8px;
     }
-  
+
     .rating-row span {
       font-size: 0.8rem;
       color: var(--text-secondary);
       font-weight: 500;
     }
-  
+
     .stars {
       display: flex;
       gap: 4px;
       cursor: pointer;
     }
-  
+
     .star {
-      font-size: 1.1rem;
-      color: #d7c4ae;
+      font-size: 1.2rem;
+      color: #d4d4d8;
       transition: all 0.2s;
       cursor: pointer;
     }
-  
+
     .star:hover,
     .star.filled {
       color: var(--accent);
       transform: scale(1.1);
     }
-  
+
     .comment-label {
       display: block;
       margin-top: 8px;
@@ -419,7 +403,7 @@
       color: var(--text-secondary);
       font-weight: 500;
     }
-  
+
     .comment-input {
       width: 100%;
       margin-top: 6px;
@@ -434,13 +418,13 @@
       font-family: inherit;
       transition: all 0.3s;
     }
-  
+
     .comment-input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.2);
+      box-shadow: 0 0 0 3px rgba(139, 90, 60, 0.1);
     }
-  
+
     .empty-state {
       font-size: 0.85rem;
       color: var(--text-secondary);
@@ -448,12 +432,11 @@
       text-align: center;
       background: var(--surface-alt);
       border-radius: var(--radius);
-      border: 1px solid var(--border);
     }
-  
+
     .summary-panel {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr); /* Total, Visited, Rated, Unrated */
       gap: 12px;
       padding: 16px;
       background: var(--surface);
@@ -461,14 +444,14 @@
       border: 1px solid var(--border);
       margin-bottom: 16px;
     }
-  
+
     .summary-item {
       display: flex;
       flex-direction: column;
       gap: 4px;
       text-align: center;
     }
-  
+
     .summary-label {
       font-size: 0.75rem;
       color: var(--text-secondary);
@@ -476,52 +459,55 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-  
+
     .summary-value {
       font-size: 1.4rem;
       font-weight: 700;
       color: var(--primary);
     }
-  
+
     @media (max-width: 768px) {
       .summary-panel {
         grid-template-columns: repeat(2, 1fr);
       }
-  
+
       .layout-two-column {
         grid-template-columns: 1fr;
       }
-  
+
       #map {
         height: 300px;
       }
-  
+
       header h1 {
         font-size: 1.4rem;
       }
+
+      .tab {
+        max-width: none;
+      }
     }
   </style>
-  
 </head>
 <body>
   <div class="app">
     <header>
       <div class="header-content">
-        <h1>☕ Ingfo Cafe</h1>
-        <span>I don't like coffee; it's too bitter, but if my beloved Reze makes it, I might drink it, maybe.</span>
+        <h1>☕ Cafe Finder</h1>
+        <span>
+          I don't like coffee; it's too bitter, but if my beloved Reze makes it, I might drink it, maybe.</span>
       </div>
     </header>
 
-    <!-- Centered tabs -->
     <div class="tabs">
-      <button class="tab active" data-tab="discover">Discover Cafes</button>
+      <button class="tab active" data-tab="all">Discover Cafes</button>
       <button class="tab" data-tab="potential">Potential Visit</button>
       <button class="tab" data-tab="visited">My Visits</button>
     </div>
 
     <div class="content">
       <!-- DISCOVER TAB -->
-      <div id="discover-tab" class="tab-panel active">
+      <div id="all-tab" class="tab-panel active">
         <div class="layout-two-column">
           <div class="map-container">
             <div class="search-bar">
@@ -569,7 +555,7 @@
         </div>
       </div>
 
-      <!-- POTENTIAL VISIT TAB -->
+      <!-- POTENTIAL VISIT TAB (all unvisited cafes) -->
       <div id="potential-tab" class="tab-panel">
         <div id="potential-list" class="cafe-list-container"></div>
       </div>
@@ -586,12 +572,12 @@
             <div id="summary-visited" class="summary-value">0</div>
           </div>
           <div class="summary-item">
-            <div class="summary-label">Unvisited</div>
-            <div id="summary-unvisited" class="summary-value">0</div>
+            <div class="summary-label">Rated</div>
+            <div id="summary-rated" class="summary-value">0</div>
           </div>
           <div class="summary-item">
-            <div class="summary-label">Avg Rating</div>
-            <div id="summary-avg-rating" class="summary-value">–</div>
+            <div class="summary-label">Unrated</div>
+            <div id="summary-unrated" class="summary-value">0</div>
           </div>
         </div>
 
@@ -661,23 +647,10 @@
     function saveStateToLocalStorage() {
       const obj = {};
       cafes.forEach((cafe, id) => {
-        let lat = null;
-        let lng = null;
-        if (cafe.location) {
-          const loc = cafe.location;
-          lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
-          lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
-        }
         obj[id] = {
           visited: cafe.visited,
-          potential: cafe.potential,
           rating: cafe.rating,
           comment: cafe.comment,
-          name: cafe.name,
-          address: cafe.address,
-          lat,
-          lng,
-          googleMapsUrl: cafe.googleMapsUrl || "",
         };
       });
       try {
@@ -697,10 +670,14 @@
           p.classList.remove("active")
         );
         btn.classList.add("active");
-
         const tabId = btn.dataset.tab;
-        const panel = document.getElementById(`${tabId}-tab`);
-        if (panel) panel.classList.add("active");
+        if (tabId === "all") {
+          document.getElementById("all-tab").classList.add("active");
+        } else if (tabId === "potential") {
+          document.getElementById("potential-tab").classList.add("active");
+        } else if (tabId === "visited") {
+          document.getElementById("visited-tab").classList.add("active");
+        }
       });
     });
 
@@ -711,6 +688,20 @@
         center: defaultCenter,
         zoom: 15,
         disableDefaultUI: false,
+        styles: [
+          { elementType: "geometry", stylers: [{ color: "#faf8f3" }] },
+          { elementType: "labels.text.fill", stylers: [{ color: "#2c2622" }] },
+          {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [{ color: "#f0ede5" }],
+          },
+          {
+            featureType: "road",
+            elementType: "geometry",
+            stylers: [{ color: "#e5ddd3" }],
+          },
+        ],
       });
 
       infoWindow = new google.maps.InfoWindow();
@@ -771,7 +762,6 @@
             );
             originLocation = userLocation;
             map.setCenter(userLocation);
-            hydrateFromPersistedState();
             searchNearbyCafes(originLocation);
           },
           () => {
@@ -779,122 +769,43 @@
               defaultCenter.lat,
               defaultCenter.lng
             );
-            map.setCenter(originLocation);
-            hydrateFromPersistedState();
             searchNearbyCafes(originLocation);
           }
         );
       } else {
         originLocation = new google.maps.LatLng(defaultCenter.lat, defaultCenter.lng);
-        map.setCenter(originLocation);
-        hydrateFromPersistedState();
         searchNearbyCafes(originLocation);
       }
     }
 
-    // Rebuild cafes (including name-search ones) from localStorage
-    function hydrateFromPersistedState() {
-      if (!window.google || !google.maps) return;
-      Object.entries(persistedState).forEach(([id, saved]) => {
-        if (!saved || cafes.has(id)) return;
-
-        let loc = null;
-        if (typeof saved.lat === "number" && typeof saved.lng === "number") {
-          loc = new google.maps.LatLng(saved.lat, saved.lng);
-        }
-
-        const cafe = {
-          id,
-          name: saved.name || "Saved cafe",
-          address: saved.address || "No address",
-          location: loc,
-          visited: !!saved.visited,
-          potential: !!saved.potential,
-          rating: Number(saved.rating) || 0,
-          comment: saved.comment || "",
-          marker: null,
-          distanceMeters: null,
-          googleMapsUrl:
-            saved.googleMapsUrl ||
-            (loc
-              ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  `${saved.lat},${saved.lng}`
-                )}`
-              : ""),
-        };
-
-        if (loc) {
-          const marker = new google.maps.Marker({
-            map,
-            position: loc,
-            title: cafe.name,
-          });
-          cafe.marker = marker;
-          updateMarkerAppearance(cafe);
-        }
-
-        cafes.set(id, cafe);
-      });
-
-      renderAllCafeList();
-      renderVisitedList();
-      renderPotentialList();
-      updateSummaryPanel();
-    }
-
-    // Robust location search: try Places textSearch first, then Geocoder as fallback
     function handleManualSearch() {
       const input = document.getElementById("search-input");
       const query = input.value.trim();
       if (!query) return;
 
-      if (legacyPlacesService) {
-        const center = originLocation || map.getCenter();
-        const request = {
-          query,
-          location: center,
-          radius: 50000,
-        };
+      geocoder.geocode({ address: query }, (results, status) => {
+        if (status === "OK" && results[0]) {
+          const loc = results[0].geometry.location;
+          originLocation = loc;
+          map.setCenter(loc);
+          map.setZoom(15);
+          clearCafes();
+          searchNearbyCafes(loc);
+        } else {
+          alert("Location not found: " + status);
+        }
+      });
+    }
 
-        legacyPlacesService.textSearch(request, (results, status) => {
-          if (
-            status === google.maps.places.PlacesServiceStatus.OK &&
-            results &&
-            results.length > 0
-          ) {
-            const loc = results[0].geometry.location;
-            originLocation = loc;
-            map.setCenter(loc);
-            map.setZoom(15);
-            searchNearbyCafes(loc);
-          } else {
-            // Fallback to geocoder
-            geocoder.geocode({ address: query }, (geoResults, geoStatus) => {
-              if (geoStatus === "OK" && geoResults[0]) {
-                const loc = geoResults[0].geometry.location;
-                originLocation = loc;
-                map.setCenter(loc);
-                map.setZoom(15);
-                searchNearbyCafes(loc);
-              } else {
-                alert("Location not found: " + (geoStatus || status));
-              }
-            });
-          }
-        });
-      } else {
-        geocoder.geocode({ address: query }, (results, status) => {
-          if (status === "OK" && results[0]) {
-            const loc = results[0].geometry.location;
-            originLocation = loc;
-            map.setCenter(loc);
-            map.setZoom(15);
-            searchNearbyCafes(loc);
-          } else {
-            alert("Location not found: " + status);
-          }
-        });
-      }
+    function clearCafes() {
+      cafes.forEach((cafe) => {
+        if (cafe.marker) cafe.marker.setMap(null);
+      });
+      cafes.clear();
+      renderAllCafeList();
+      renderVisitedList();
+      renderPotentialList();
+      updateSummaryPanel();
     }
 
     async function loadGeoAndPlaces() {
@@ -927,7 +838,6 @@
           address: place.formattedAddress || "No address",
           location: loc,
           visited: saved ? !!saved.visited : false,
-          potential: saved ? !!saved.potential : false,
           rating: saved ? Number(saved.rating) || 0 : 0,
           comment: saved ? saved.comment || "" : "",
           marker: null,
@@ -955,21 +865,14 @@
         cafe.address = place.formattedAddress || cafe.address;
         cafe.location = loc;
         cafe.distanceMeters = distanceMeters;
-        cafe.googleMapsUrl =
-          cafe.googleMapsUrl ||
-          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+        if (!cafe.googleMapsUrl) {
+          cafe.googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
             `${lat},${lng}`
           )}`;
+        }
         if (cafe.marker) {
           cafe.marker.setPosition(loc);
           cafe.marker.setTitle(cafe.name);
-        } else {
-          const marker = new google.maps.Marker({
-            map,
-            position: loc,
-            title: cafe.name,
-          });
-          cafe.marker = marker;
         }
       }
 
@@ -977,11 +880,14 @@
       return cafe;
     }
 
-    // Nearby search (Places API New) – no longer clears cafes map
+    // Nearby search (Places API New)
     async function searchNearbyCafes(center) {
       try {
         const { Place, SearchNearbyRankPreference, spherical } =
           await loadGeoAndPlaces();
+
+        cafes.forEach((cafe) => cafe.marker && cafe.marker.setMap(null));
+        cafes.clear();
 
         const centerLat =
           typeof center.lat === "function" ? center.lat() : center.lat;
@@ -991,10 +897,12 @@
         const request = {
           fields: ["id", "displayName", "location", "formattedAddress"],
           locationRestriction: {
-            center: { lat: centerLat, lng: centerLng },
-            radius: 50000,
+            circle: {
+              center: { lat: centerLat, lng: centerLng },
+              radius: 50000, // 50 km
+            },
           },
-          includedPrimaryTypes: ["cafe"],
+          includedPrimaryTypes: ["cafe", "restaurant", "bar", "bakery"],
           maxResultCount: 20,
           rankPreference: SearchNearbyRankPreference.DISTANCE,
         };
@@ -1024,173 +932,141 @@
       }
     }
 
-    // Name search via classic PlacesService.textSearch for cafes
-async function searchByCafeName() {
-  const input = document.getElementById("name-filter");
-  const query = input.value.trim();
-  nameFilter = query.toLowerCase();
+    // Name search via classic PlacesService.textSearch
+    async function searchByCafeName() {
+      const input = document.getElementById("name-filter");
+      const query = input.value.trim();
+      nameFilter = query.toLowerCase();
 
-  if (!query) {
-    renderAllCafeList();
-    renderVisitedList();
-    renderPotentialList && renderPotentialList();
-    return;
-  }
-
-  if (!legacyPlacesService) {
-    alert("Places service not ready yet.");
-    return;
-  }
-
-  try {
-    const { spherical } = await loadGeometryLib();
-    const center = originLocation || map.getCenter();
-
-    const request = {
-      query: query,
-      location: center,
-      radius: 50000, // 50 km
-    };
-
-    // only treat these as "cafes"
-    const allowedTypes = [
-      "cafe",
-      "coffee_shop",
-      "bakery",
-      "restaurant",
-      "bar",
-      "food",
-      "meal_takeaway",
-      "meal_delivery",
-    ];
-
-    legacyPlacesService.textSearch(request, (results, status) => {
-      if (
-        status !== google.maps.places.PlacesServiceStatus.OK ||
-        !results ||
-        results.length === 0
-      ) {
-        console.error("Text search status:", status);
-        alert("No cafes found with that name near this area.");
+      if (!query) {
         renderAllCafeList();
         renderVisitedList();
-        renderPotentialList && renderPotentialList();
+        renderPotentialList();
         return;
       }
 
-      results.forEach((place) => {
-        if (!place.place_id || !place.geometry || !place.geometry.location)
-          return;
-
-        // ⬇️ NEW: skip non-food places (shoe stores, banks, etc.)
-        const types = place.types || [];
-        const isFoodLike = types.some((t) => allowedTypes.includes(t));
-        if (!isFoodLike) {
-          // console.log("Skipping non-cafe result:", place.name, types);
-          return;
-        }
-
-        const id = place.place_id;
-        const loc = place.geometry.location;
-        const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
-        const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
-
-        let distanceMeters = null;
-        if (originLocation) {
-          distanceMeters = spherical.computeDistanceBetween(
-            originLocation,
-            loc
-          );
-        }
-
-        const saved = persistedState[id];
-
-        let cafe = cafes.get(id);
-        if (!cafe) {
-          cafe = {
-            id,
-            name: place.name || "Unnamed cafe",
-            address:
-              place.formatted_address ||
-              (place.vicinity || "No address"),
-            location: loc,
-            visited: saved ? !!saved.visited : false,
-            potential: saved ? !!saved.potential : false,
-            rating: saved ? Number(saved.rating) || 0 : 0,
-            comment: saved ? saved.comment || "" : "",
-            marker: null,
-            distanceMeters,
-            googleMapsUrl: `https://www.google.com/maps/place/?q=place_id:${id}`,
-          };
-
-          const marker = new google.maps.Marker({
-            map,
-            position: loc,
-            title: cafe.name,
-          });
-
-          marker.addListener("click", () => {
-            map.panTo(loc);
-            openInfoWindow(cafe);
-          });
-
-          cafe.marker = marker;
-          cafes.set(id, cafe);
-        } else {
-          cafe.name = place.name || cafe.name;
-          cafe.address =
-            place.formatted_address ||
-            place.vicinity ||
-            cafe.address;
-          cafe.location = loc;
-          cafe.distanceMeters = distanceMeters;
-          cafe.googleMapsUrl =
-            cafe.googleMapsUrl ||
-            `https://www.google.com/maps/place/?q=place_id:${id}`;
-          if (cafe.marker) {
-            cafe.marker.setPosition(loc);
-            cafe.marker.setTitle(cafe.name);
-          } else {
-            const marker = new google.maps.Marker({
-              map,
-              position: loc,
-              title: cafe.name,
-            });
-            cafe.marker = marker;
-          }
-        }
-
-        updateMarkerAppearance(cafe);
-      });
-
-      const first = results[0];
-      if (first && first.geometry && first.geometry.location) {
-        map.panTo(first.geometry.location);
-        map.setZoom(16);
+      if (!legacyPlacesService) {
+        alert("Places service not ready yet.");
+        return;
       }
 
-      renderAllCafeList();
-      renderVisitedList();
-      renderPotentialList && renderPotentialList();
-      updateSummaryPanel && updateSummaryPanel();
-      saveStateToLocalStorage();
-    });
-  } catch (err) {
-    console.error("Text Search error:", err);
-  }
-}
+      try {
+        const { spherical } = await loadGeometryLib();
+        const center = originLocation || map.getCenter();
 
+        const request = {
+          query: query,
+          location: center,
+          radius: 50000,
+        };
+
+        legacyPlacesService.textSearch(request, (results, status) => {
+          if (
+            status !== google.maps.places.PlacesServiceStatus.OK ||
+            !results ||
+            results.length === 0
+          ) {
+            console.error("Text search status:", status);
+            alert("No cafes found with that name near this area.");
+            renderAllCafeList();
+            renderVisitedList();
+            renderPotentialList();
+            return;
+          }
+
+          results.forEach((place) => {
+            if (!place.place_id || !place.geometry || !place.geometry.location)
+              return;
+
+            const id = place.place_id;
+            const loc = place.geometry.location;
+            const lat =
+              typeof loc.lat === "function" ? loc.lat() : loc.lat;
+            const lng =
+              typeof loc.lng === "function" ? loc.lng() : loc.lng;
+
+            let distanceMeters = null;
+            if (originLocation) {
+              distanceMeters = spherical.computeDistanceBetween(
+                originLocation,
+                loc
+              );
+            }
+
+            const saved = persistedState[id];
+
+            let cafe = cafes.get(id);
+            if (!cafe) {
+              cafe = {
+                id,
+                name: place.name || "Unnamed cafe",
+                address:
+                  place.formatted_address ||
+                  (place.vicinity || "No address"),
+                location: loc,
+                visited: saved ? !!saved.visited : false,
+                rating: saved ? Number(saved.rating) || 0 : 0,
+                comment: saved ? saved.comment || "" : "",
+                marker: null,
+                distanceMeters,
+                googleMapsUrl: `https://www.google.com/maps/place/?q=place_id:${id}`,
+              };
+
+              const marker = new google.maps.Marker({
+                map,
+                position: loc,
+                title: cafe.name,
+              });
+
+              marker.addListener("click", () => {
+                map.panTo(loc);
+                openInfoWindow(cafe);
+              });
+
+              cafe.marker = marker;
+              cafes.set(id, cafe);
+            } else {
+              cafe.name = place.name || cafe.name;
+              cafe.address =
+                place.formatted_address ||
+                place.vicinity ||
+                cafe.address;
+              cafe.location = loc;
+              cafe.distanceMeters = distanceMeters;
+              if (!cafe.googleMapsUrl) {
+                cafe.googleMapsUrl = `https://www.google.com/maps/place/?q=place_id:${id}`;
+              }
+              if (cafe.marker) {
+                cafe.marker.setPosition(loc);
+                cafe.marker.setTitle(cafe.name);
+              }
+            }
+
+            updateMarkerAppearance(cafe);
+          });
+
+          const first = results[0];
+          if (first && first.geometry && first.geometry.location) {
+            map.panTo(first.geometry.location);
+            map.setZoom(16);
+          }
+
+          renderAllCafeList();
+          renderVisitedList();
+          renderPotentialList();
+          updateSummaryPanel();
+          saveStateToLocalStorage();
+        });
+      } catch (err) {
+        console.error("Text Search error:", err);
+      }
+    }
 
     function updateMarkerAppearance(cafe) {
       if (!cafe.marker) return;
-      let iconUrl;
-      if (cafe.visited) {
-        iconUrl = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
-      } else if (cafe.potential) {
-        iconUrl = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
-      } else {
-        iconUrl = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-      }
+      const iconUrl = cafe.visited
+        ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+        : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
       cafe.marker.setIcon(iconUrl);
     }
 
@@ -1230,64 +1106,42 @@ async function searchByCafeName() {
 
     function openInfoWindow(cafe) {
       const statusHtml = cafe.visited
-        ? '<span style="background: rgba(123,208,160,0.15); color:#7bd0a0; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; display: inline-block;">Visited</span>'
-        : cafe.potential
-        ? '<span style="background: rgba(243,195,143,0.15); color:#f3c38f; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; display: inline-block;">Potential visit</span>'
-        : '<span style="background: rgba(242,139,150,0.1); color:#f28b96; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; display: inline-block;">Unvisited</span>';
+        ? '<span style="background: #e8c9a0; color: #8b5a3c; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; display: inline-block;">Visited</span>'
+        : '<span style="background: #fce4ec; color: #c2185b; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; display: inline-block;">Unvisited</span>';
 
-      const visitLabel = cafe.visited ? "Mark as Unvisited" : "Mark as Visited";
-      const potentialLabel = cafe.potential
-        ? "Remove Potential"
-        : "Mark Potential";
-
+      const buttonLabel = cafe.visited ? "Mark as Unvisited" : "Mark as Visited";
       const distanceLabel =
         cafe.distanceMeters != null
           ? formatDistance(cafe.distanceMeters)
           : "Distance unknown";
       const linkHtml = cafe.googleMapsUrl
-        ? `<a href="${cafe.googleMapsUrl}" target="_blank" style="font-size:12px;color:#f3c38f;text-decoration:none;margin-top:8px;display:inline-block;">Open in Google Maps →</a>`
+        ? `<a href="${cafe.googleMapsUrl}" target="_blank" style="font-size:12px;color:#8b5a3c;text-decoration:none;margin-top:8px;display:inline-block;">Open in Google Maps →</a>`
         : "";
 
       const html = `
-        <div style="min-width:210px; font-family: system-ui, sans-serif; font-size: 13px; color:#f4e3d4;">
-          <div style="font-weight:600; margin-bottom:4px;">${cafe.name}</div>
-          <div style="color:#b89c84; margin-bottom:4px; font-size: 12px;">${cafe.address}</div>
-          <div style="color:#b89c84; font-size:12px; margin-bottom:6px;">
+        <div style="min-width:200px; font-family: system-ui, sans-serif; font-size: 13px;">
+          <div style="font-weight:600; margin-bottom:4px; color: #2c2622;">${cafe.name}</div>
+          <div style="color:#6b6361; margin-bottom:4px; font-size: 12px;">${cafe.address}</div>
+          <div style="color:#6b6361; font-size:12px; margin-bottom:6px;">
             📍 ${distanceLabel}
           </div>
           <div style="margin-bottom:8px;">${statusHtml}</div>
-          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:4px;">
-            <button
-              style="
-                border-radius:999px;
-                border:none;
-                background:#d18b5b;
-                color:#120c09;
-                font-size:12px;
-                padding:6px 12px;
-                cursor:pointer;
-                font-weight:600;
-              "
-              onclick="toggleVisited('${cafe.id}')"
-            >
-              ✓ ${visitLabel}
-            </button>
-            <button
-              style="
-                border-radius:999px;
-                border:1px solid #f3c38f;
-                background:transparent;
-                color:#f3c38f;
-                font-size:12px;
-                padding:6px 12px;
-                cursor:pointer;
-                font-weight:600;
-              "
-              onclick="togglePotential('${cafe.id}')"
-            >
-              ★ ${potentialLabel}
-            </button>
-          </div>
+          <button
+            style="
+              border-radius:999px;
+              border:none;
+              background:#8b5a3c;
+              color:white;
+              font-size:12px;
+              padding:6px 12px;
+              cursor:pointer;
+              font-weight:600;
+              margin-bottom:4px;
+            "
+            onclick="toggleVisited('${cafe.id}')"
+          >
+            ✓ ${buttonLabel}
+          </button>
           ${linkHtml}
         </div>
       `;
@@ -1307,38 +1161,19 @@ async function searchByCafeName() {
       saveStateToLocalStorage();
     }
 
-    function togglePotential(placeId) {
-      const cafe = cafes.get(placeId);
-      if (!cafe) return;
-      cafe.potential = !cafe.potential;
-      updateMarkerAppearance(cafe);
-      renderAllCafeList();
-      renderVisitedList();
-      renderPotentialList();
-      updateSummaryPanel();
-      saveStateToLocalStorage();
-    }
-
     window.toggleVisited = toggleVisited;
-    window.togglePotential = togglePotential;
 
     function updateSummaryPanel() {
+      const total = cafes.size;
       const visited = Array.from(cafes.values()).filter((c) => c.visited);
-      const totalVisited = visited.length;
+      const visitedCount = visited.length;
+      const ratedCount = visited.filter((c) => c.rating > 0).length;
+      const unratedCount = visitedCount - ratedCount;
 
-      const ratedVisited = visited.filter((c) => c.rating > 0);
-      const avgRating =
-        ratedVisited.length > 0
-          ? (
-              ratedVisited.reduce((sum, c) => sum + c.rating, 0) /
-              ratedVisited.length
-            ).toFixed(1)
-          : "–";
-
-      document.getElementById("summary-total").textContent = totalVisited;
-      document.getElementById("summary-visited").textContent = totalVisited;
-      document.getElementById("summary-unvisited").textContent = 0;
-      document.getElementById("summary-avg-rating").textContent = avgRating;
+      document.getElementById("summary-total").textContent = total;
+      document.getElementById("summary-visited").textContent = visitedCount;
+      document.getElementById("summary-rated").textContent = ratedCount;
+      document.getElementById("summary-unrated").textContent = unratedCount;
     }
 
     function renderAllCafeList() {
@@ -1374,18 +1209,6 @@ async function searchByCafeName() {
           cafe.distanceMeters != null ? formatDistance(cafe.distanceMeters) : null;
         const hasLink = !!cafe.googleMapsUrl;
 
-        const statusClasses = cafe.visited
-          ? "status status-visited"
-          : cafe.potential
-          ? "status status-potential"
-          : "status status-unvisited";
-
-        const statusLabel = cafe.visited
-          ? "Visited"
-          : cafe.potential
-          ? "Potential"
-          : "Unvisited";
-
         card.innerHTML = `
           <div class="cafe-header">
             <div class="cafe-info">
@@ -1402,17 +1225,14 @@ async function searchByCafeName() {
                   : ""
               }
             </div>
-            <span class="${statusClasses}">
-              ${statusLabel}
+            <span class="status ${
+              cafe.visited ? "status-visited" : "status-unvisited"
+            }">
+              ${cafe.visited ? "✓ Visited" : "Unvisited"}
             </span>
           </div>
           <div class="cafe-actions">
-            <button class="small-btn" data-action="focus" data-id="${cafe.id}">
-              📍 View Map
-            </button>
-            <button class="small-btn" data-action="potential" data-id="${cafe.id}">
-              ${cafe.potential ? "★ Remove Potential" : "☆ Potential"}
-            </button>
+            <button class="small-btn" data-action="focus" data-id="${cafe.id}">📍 View Map</button>
             <button class="small-btn small-btn--accent" data-action="toggle" data-id="${cafe.id}">
               ${cafe.visited ? "✓ Unvisit" : "+ Visit"}
             </button>
@@ -1436,8 +1256,81 @@ async function searchByCafeName() {
         openInfoWindow(cafe);
       } else if (action === "toggle") {
         toggleVisited(id);
-      } else if (action === "potential") {
-        togglePotential(id);
+      }
+    });
+
+    // Potential Visit = all unvisited cafes
+    function renderPotentialList() {
+      const potentialEl = document.getElementById("potential-list");
+      potentialEl.innerHTML = "";
+
+      let potential = Array.from(cafes.values()).filter((c) => !c.visited);
+
+      if (nameFilter) {
+        potential = potential.filter((c) =>
+          c.name.toLowerCase().includes(nameFilter)
+        );
+      }
+
+      if (potential.length === 0) {
+        potentialEl.innerHTML =
+          '<p class="empty-state">✨ No potential visits yet. Discover cafes and mark some as unvisited targets!</p>';
+        return;
+      }
+
+      const sorted = sortCafes(potential, sortMode);
+
+      sorted.forEach((cafe) => {
+        const card = document.createElement("div");
+        card.className = "cafe-card";
+
+        const distanceText =
+          cafe.distanceMeters != null ? formatDistance(cafe.distanceMeters) : null;
+        const hasLink = !!cafe.googleMapsUrl;
+
+        card.innerHTML = `
+          <div class="cafe-header">
+            <div class="cafe-info">
+              <div class="cafe-name">${cafe.name}</div>
+              <div class="cafe-address">${cafe.address}</div>
+              ${
+                distanceText
+                  ? `<div class="cafe-distance">📍 ${distanceText}</div>`
+                  : ""
+              }
+              ${
+                hasLink
+                  ? `<a class="gmaps-link" href="${cafe.googleMapsUrl}" target="_blank">Open in Maps →</a>`
+                  : ""
+              }
+            </div>
+            <span class="status status-unvisited">Unvisited</span>
+          </div>
+          <div class="cafe-actions">
+            <button class="small-btn" data-action="focus" data-id="${cafe.id}">📍 View Map</button>
+            <button class="small-btn small-btn--accent" data-action="toggle" data-id="${cafe.id}">
+              + Mark Visited
+            </button>
+          </div>
+        `;
+        potentialEl.appendChild(card);
+      });
+    }
+
+    document.getElementById("potential-list").addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      const cafe = cafes.get(id);
+      if (!cafe) return;
+
+      if (action === "focus") {
+        map.panTo(cafe.location);
+        map.setZoom(17);
+        openInfoWindow(cafe);
+      } else if (action === "toggle") {
+        toggleVisited(id);
       }
     });
 
@@ -1522,66 +1415,6 @@ async function searchByCafeName() {
       });
 
       updateSummaryPanel();
-    }
-
-    function renderPotentialList() {
-      const potentialEl = document.getElementById("potential-list");
-      potentialEl.innerHTML = "";
-
-      let potentials = Array.from(cafes.values()).filter((c) => c.potential);
-
-      if (nameFilter) {
-        potentials = potentials.filter((c) =>
-          c.name.toLowerCase().includes(nameFilter)
-        );
-      }
-
-      if (potentials.length === 0) {
-        potentialEl.innerHTML =
-          '<p class="empty-state">⭐ You haven\'t marked any cafes as potential visits yet.</p>';
-        return;
-      }
-
-      const sorted = sortCafes(potentials, sortMode);
-      sorted.forEach((cafe) => {
-        const card = document.createElement("div");
-        card.className = "cafe-card";
-
-        const distanceText =
-          cafe.distanceMeters != null ? formatDistance(cafe.distanceMeters) : null;
-
-        card.innerHTML = `
-          <div class="cafe-header">
-            <div class="cafe-info">
-              <div class="cafe-name">${cafe.name}</div>
-              <div class="cafe-address">${cafe.address}</div>
-              ${
-                distanceText
-                  ? `<div class="cafe-distance">📍 ${distanceText}</div>`
-                  : ""
-              }
-              ${
-                cafe.googleMapsUrl
-                  ? `<a class="gmaps-link" href="${cafe.googleMapsUrl}" target="_blank">Open in Maps →</a>`
-                  : ""
-              }
-            </div>
-            <span class="status status-potential">★ Potential</span>
-          </div>
-          <div class="cafe-actions">
-            <button class="small-btn" data-action="focus" data-id="${cafe.id}">
-              📍 View Map
-            </button>
-            <button class="small-btn" data-action="potential" data-id="${cafe.id}">
-              Remove from Potential
-            </button>
-            <button class="small-btn small-btn--accent" data-action="toggle" data-id="${cafe.id}">
-              ${cafe.visited ? "✓ Unvisit" : "+ Visit"}
-            </button>
-          </div>
-        `;
-        potentialEl.appendChild(card);
-      });
     }
 
     document.getElementById("visited-list").addEventListener("click", (e) => {
