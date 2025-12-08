@@ -5,7 +5,7 @@
   <title>Ingfo Cafe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Favicon / tab icon -->
-  <link rel="icon" href="coffee-icon.jpg" type="image/jpg" />
+  <link rel="icon" href="coffe-icon.jpg" type="image/jpg" />
   <style>
     * {
       box-sizing: border-box;
@@ -503,6 +503,150 @@
         font-size: 1.4rem;
       }
     }
+  
+    /* --- MOBILE LAYOUT TWEAKS --------------------------------- */
+
+/* Phones & small tablets */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  header {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header-content {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  header span {
+    margin-left: 40px;         /* leaves space for the cup icon */
+    max-width: 100%;
+    display: block;
+    line-height: 1.4;
+  }
+
+  /* Tabs: full-width, scrollable row */
+  .tabs {
+    padding: 0 8px;
+    justify-content: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;     /* Firefox */
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;             /* Chrome/Edge */
+  }
+
+  .tab {
+    flex: 0 0 auto;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .tab-panel {
+    padding: 16px 12px;
+  }
+
+  /* Map + search: stacked, button full width */
+  .layout-two-column {
+    grid-template-columns: 1fr;   /* already 1fr in your CSS, keep it */
+    gap: 12px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  #map {
+    height: 55vh;
+    border-radius: 16px;
+  }
+
+  .info-text {
+    font-size: 0.78rem;
+  }
+
+  /* Filters & cards */
+  .filter-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-row label {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cafe-card {
+    padding: 12px;
+  }
+
+  .cafe-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cafe-actions {
+    gap: 8px;
+  }
+
+  .small-btn {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+  }
+
+  /* Summary panel in My Visits */
+  .summary-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .summary-value {
+    font-size: 1.2rem;
+  }
+}
+
+/* Extra tiny phones */
+@media (max-width: 480px) {
+  header span {
+    margin-left: 0;
+    font-size: 0.78rem;
+  }
+
+  .tab {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
+  #map {
+    height: 50vh;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -1608,4 +1752,4 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBTyv2DEnE1fudytT4w-c0OfsvKdeJHbg&libraries=places,geometry&callback=initMap"
   ></script>
 </body>
-</html>
+</html>AIzaSyBBTyv2DEnE1fudytT4w-c0OfsvKdeJHbg
