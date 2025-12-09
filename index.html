@@ -5,7 +5,7 @@
   <title>Ingfo Cafe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Favicon / tab icon -->
-  <link rel="icon" href="coffe-icon.jpg" type="image/jpg" />
+  <link rel="icon" href="coffee-icon.jpg" type="image/jpg" />
   <style>
     * {
       box-sizing: border-box;
@@ -462,7 +462,7 @@
       border-radius: var(--radius);
       border: 1px solid var(--border);
       margin: 16px auto;
-      max-width: 900px; /* centered, not too wide */
+      max-width: 900px;
     }
 
     .summary-item {
@@ -503,150 +503,6 @@
         font-size: 1.4rem;
       }
     }
-  
-    /* --- MOBILE LAYOUT TWEAKS --------------------------------- */
-
-/* Phones & small tablets */
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-  }
-
-  header {
-    padding: 12px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .header-content {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-
-  header h1 {
-    font-size: 1.4rem;
-  }
-
-  header span {
-    margin-left: 40px;         /* leaves space for the cup icon */
-    max-width: 100%;
-    display: block;
-    line-height: 1.4;
-  }
-
-  /* Tabs: full-width, scrollable row */
-  .tabs {
-    padding: 0 8px;
-    justify-content: flex-start;
-    gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;     /* Firefox */
-  }
-  .tabs::-webkit-scrollbar {
-    display: none;             /* Chrome/Edge */
-  }
-
-  .tab {
-    flex: 0 0 auto;
-    padding: 12px 18px;
-    font-size: 0.9rem;
-    white-space: nowrap;
-  }
-
-  .tab-panel {
-    padding: 16px 12px;
-  }
-
-  /* Map + search: stacked, button full width */
-  .layout-two-column {
-    grid-template-columns: 1fr;   /* already 1fr in your CSS, keep it */
-    gap: 12px;
-  }
-
-  .search-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-input {
-    width: 100%;
-  }
-
-  .search-btn {
-    width: 100%;
-    text-align: center;
-  }
-
-  #map {
-    height: 55vh;
-    border-radius: 16px;
-  }
-
-  .info-text {
-    font-size: 0.78rem;
-  }
-
-  /* Filters & cards */
-  .filter-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .filter-row label {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .cafe-card {
-    padding: 12px;
-  }
-
-  .cafe-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .cafe-actions {
-    gap: 8px;
-  }
-
-  .small-btn {
-    flex: 1 1 calc(50% - 4px);
-    justify-content: center;
-  }
-
-  /* Summary panel in My Visits */
-  .summary-panel {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .summary-value {
-    font-size: 1.2rem;
-  }
-}
-
-/* Extra tiny phones */
-@media (max-width: 480px) {
-  header span {
-    margin-left: 0;
-    font-size: 0.78rem;
-  }
-
-  .tab {
-    padding: 10px 14px;
-    font-size: 0.85rem;
-  }
-
-  #map {
-    height: 50vh;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -886,11 +742,11 @@
       document
         .getElementById("name-filter")
         .addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            searchByCafeName();
-          }
-        });
+        if (e.key === "Enter") {
+          e.preventDefault();
+          searchByCafeName();
+        }
+      });
 
       document
         .getElementById("rating-filter")
@@ -1123,7 +979,7 @@
       return cafe;
     }
 
-    // Nearby search (Places API New) – no longer clears cafes map
+    // Nearby search (Places API New)
     async function searchNearbyCafes(center) {
       try {
         const { Place, SearchNearbyRankPreference, spherical } =
@@ -1179,7 +1035,7 @@
       if (!query) {
         renderAllCafeList();
         renderVisitedList();
-        renderPotentialList && renderPotentialList();
+        renderPotentialList();
         return;
       }
 
@@ -1198,18 +1054,6 @@
           radius: 50000, // 50 km
         };
 
-        // only treat these as "cafes"
-        const allowedTypes = [
-          "cafe",
-          "coffee_shop",
-          "bakery",
-          "restaurant",
-          "bar",
-          "food",
-          "meal_takeaway",
-          "meal_delivery",
-        ];
-
         legacyPlacesService.textSearch(request, (results, status) => {
           if (
             status !== google.maps.places.PlacesServiceStatus.OK ||
@@ -1217,23 +1061,16 @@
             results.length === 0
           ) {
             console.error("Text search status:", status);
-            alert("No cafes found with that name near this area.");
+            alert("No places found with that name near this area.");
             renderAllCafeList();
             renderVisitedList();
-            renderPotentialList && renderPotentialList();
+            renderPotentialList();
             return;
           }
 
           results.forEach((place) => {
             if (!place.place_id || !place.geometry || !place.geometry.location)
               return;
-
-            // skip non-food places
-            const types = place.types || [];
-            const isFoodLike = types.some((t) => allowedTypes.includes(t));
-            if (!isFoodLike) {
-              return;
-            }
 
             const id = place.place_id;
             const loc = place.geometry.location;
@@ -1254,7 +1091,7 @@
             if (!cafe) {
               cafe = {
                 id,
-                name: place.name || "Unnamed cafe",
+                name: place.name || "Unnamed place",
                 address:
                   place.formatted_address ||
                   (place.vicinity || "No address"),
@@ -1316,8 +1153,8 @@
 
           renderAllCafeList();
           renderVisitedList();
-          renderPotentialList && renderPotentialList();
-          updateSummaryPanel && updateSummaryPanel();
+          renderPotentialList();
+          updateSummaryPanel();
           saveStateToLocalStorage();
         });
       } catch (err) {
@@ -1329,11 +1166,11 @@
       if (!cafe.marker) return;
       let iconUrl;
       if (cafe.visited) {
-        iconUrl = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+        iconUrl = "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
       } else if (cafe.potential) {
-        iconUrl = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+        iconUrl = "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
       } else {
-        iconUrl = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+        iconUrl = "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
       }
       cafe.marker.setIcon(iconUrl);
     }
@@ -1466,7 +1303,7 @@
     window.toggleVisited = toggleVisited;
     window.togglePotential = togglePotential;
 
-    // NEW: counts Rated / Unrated, no Unvisited summary
+    // NEW: counts Rated / Unrated
     function updateSummaryPanel() {
       const visited = Array.from(cafes.values()).filter((c) => c.visited);
       const totalVisited = visited.length;
@@ -1561,7 +1398,28 @@
       });
     }
 
+    // Button handlers for Discover list
     document.getElementById("cafe-list").addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      const cafe = cafes.get(id);
+      if (!cafe) return;
+
+      if (action === "focus") {
+        map.panTo(cafe.location);
+        map.setZoom(17);
+        openInfoWindow(cafe);
+      } else if (action === "toggle") {
+        toggleVisited(id);
+      } else if (action === "potential") {
+        togglePotential(id);
+      }
+    });
+
+    // Button handlers for Potential list (FIX)
+    document.getElementById("potential-list").addEventListener("click", (e) => {
       const btn = e.target.closest("button[data-action]");
       if (!btn) return;
       const action = btn.dataset.action;
@@ -1752,4 +1610,4 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBTyv2DEnE1fudytT4w-c0OfsvKdeJHbg&libraries=places,geometry&callback=initMap"
   ></script>
 </body>
-</html>AIzaSyBBTyv2DEnE1fudytT4w-c0OfsvKdeJHbg
+</html>
